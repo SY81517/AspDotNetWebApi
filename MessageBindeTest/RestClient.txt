@@ -1,0 +1,10 @@
+﻿POST  http://localhost:63106/api/test/takeit HTTP/1.1
+Content-Type:application/json
+
+{"V1":"Something","V2": "Something else"}
+
+
+POST  http://localhost:63106/api/test2/fire HTTP/1.1
+Content-Type:application/json
+
+{"ID":"2","ObMyObject":{"V1":"something","V2":"anything"}}
