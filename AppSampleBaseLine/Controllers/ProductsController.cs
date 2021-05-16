@@ -14,8 +14,6 @@ namespace AppSampleBaseLine.Controllers
         [HttpGet]
         public IHttpActionResult Get()
         {
-            //Configuration.Services.GetTraceWriter().Info(Request, "ProductsController", "Get the list of products.");
-            Configuration.Services.GetTraceWriter().Info(Request, "ProductsController", "Get the list of products.");
             return Ok();
         }
     }
