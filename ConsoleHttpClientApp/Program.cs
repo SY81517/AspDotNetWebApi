@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -40,6 +42,7 @@ namespace ConsoleHttpClientApp
         {
             Setting();
             var stopwatch = new Stopwatch();
+            var recordTimeSpans = new List<TimeSpan>();
             for (var i = 0; i < 10; i++)
             {
                 var result = AppResult.Ok;
@@ -58,27 +61,33 @@ namespace ConsoleHttpClientApp
                 finally
                 {
                     stopwatch.Stop();
+                    recordTimeSpans.Add(stopwatch.Elapsed);
                     var resultStr = $"i={i},Time={stopwatch.Elapsed.Seconds:00}.{stopwatch.Elapsed.Milliseconds:000}[sec],Result={result}";
                     Console.WriteLine(resultStr);
                 }
             }
+
+            var doubleAverageTicks = recordTimeSpans.Average(timeSpan => timeSpan.Ticks);
+            var longAverageTicks = Convert.ToInt64(doubleAverageTicks);
+            var average = new TimeSpan(longAverageTicks);
+            Console.WriteLine($"Average={average.Seconds:00}.{average.Milliseconds:000}[sec]");
         }
 
         /// <summary>
         /// GET APIをコール
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">RI</param>
         /// <returns></returns>
         static async Task<IEnumerable<string>> GetAllAsync(Uri uri)
         {
             IEnumerable<string> resource = null;
             // Get要求
             var response = await Client.GetAsync(uri);
-            if (response.IsSuccessStatusCode)
-            {
-                //リソース取得
-                resource = await response.Content.ReadAsAsync<IEnumerable<string>>();
-            }
+            //if (response.IsSuccessStatusCode)
+            //{
+            //    //リソース取得
+            //    resource = await response.Content.ReadAsAsync<IEnumerable<string>>();
+            //}
             return resource;
         }
     }
