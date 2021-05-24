@@ -12,7 +12,7 @@ namespace ConsoleHttpClientApp
         /// HTTPクライアント
         /// </summary>
         /// <remarks>
-        /// 1度だけインスタンス化し、アプリケーション全体で使い回す
+        /// staticメンバーにして、アプリケーション全体で使い回す
         /// </remarks>
         private static readonly HttpClient Client = new HttpClient();
 
